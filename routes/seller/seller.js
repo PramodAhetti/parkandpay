@@ -47,8 +47,6 @@ route.post('/login',(req,res)=>{
     })
 })
 
-route.post('/location',authenticate,(req,res)=>{
-    res.send("this is location route")
-})
+
 
 module.exports=route;
