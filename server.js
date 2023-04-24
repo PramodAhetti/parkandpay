@@ -1,8 +1,10 @@
 const express=require('express')
 const dotenv=require('dotenv').config()
 const bodyparser=require('body-parser')
+const cookieparser=require('cookie-parser')
 let port=process.env.PORT||5000
 const app=express();
+app.use(cookieparser())
 const use=1;
 
 const mongoose=require('mongoose')
@@ -10,10 +12,6 @@ mongoose.set('strictQuery', true);
 
 mongoose.connect(process.env.MONGO_DB,()=>{
     console.log("connected to db")
-})
-
-app.get('',(req,res)=>{
-    res.send({message:'hello'})
 })
 app.use(bodyparser.json())
 app.use('/user',require('./routes/user/user'))

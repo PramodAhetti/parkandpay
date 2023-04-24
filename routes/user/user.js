@@ -3,9 +3,8 @@ let route=express.Router();
 let users=require('../../data/user/User')
 let sellers=require('../../data/seller/Seller')
 let jwt=require('jsonwebtoken')
-
 let authenticate=(req,res,next)=>{
-     jwt.verify(req.body.auth_token,process.env.JWT_SECRET_KEY,(err,doc)=>{
+     jwt.verify(req.cookies.auth_token,process.env.JWT_SECRET_KEY,(err,doc)=>{
           if(doc.username_user){
             req.body.username=doc.username_user;
             next();
@@ -37,7 +36,8 @@ route.post('/login',(req,res)=>{
     users.findOne({username:req.body.username,password:req.body.password},(err,doc)=>{
         if(doc){
             jwt.sign({username_user:req.body.username},process.env.JWT_SECRET_KEY,(err,token)=>{
-                res.send({"auth_token":token})
+                res.cookie("auth_token",token)
+                res.send("authtoken in cookies")
             },{expiresInseconds:5})
         }else{
             res.status(400).send({message:"user doesnt exists"})
