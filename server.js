@@ -17,7 +17,9 @@ app.use(bodyparser.json())
 app.use('/user',require('./routes/user/user'))
 app.use('/seller',require('./routes/seller/seller'))
 
-
+app.get('/home',(req,res)=>{
+     res.send({"message":"testing"});
+})
 app.listen(port,()=>{
     console.log(`server started at port ${port}`)
 })

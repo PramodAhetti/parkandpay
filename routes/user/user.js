@@ -37,14 +37,13 @@ route.post('/login',(req,res)=>{
         if(doc){
             jwt.sign({username_user:req.body.username},process.env.JWT_SECRET_KEY,(err,token)=>{
                 res.cookie("auth_token",token)
-                res.send("authtoken in cookies")
+                res.send({user:req.body.username})
             },{expiresInseconds:5})
         }else{
             res.status(400).send({message:"user doesnt exists"})
         }
     })
 })
-
 
 
 route.post('/near',authenticate,(req,res)=>{
