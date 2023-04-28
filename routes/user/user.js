@@ -9,7 +9,7 @@ let authenticate=(req,res,next)=>{
             req.body.username=doc.username_user;
             next();
           }else{
-            res.status(400).send({error:"user  login required"})
+            res.status(500).send({error:"user  login required"})
           }
      })
 }
@@ -25,8 +25,11 @@ route.post('/new',(req,res)=>{
                     password:req.body.password,
                     email:req.body.email
             })
-            user.save();
-            res.send({message:"user saved"})
+            jwt.sign({username_user:req.body.username},process.env.JWT_SECRET_KEY,(err,token)=>{
+                user.save();
+                res.cookie("auth_token",token);
+                res.send({message:"user saved"})
+            },{expiresInseconds:5})
         }
     })
 
@@ -36,7 +39,7 @@ route.post('/login',(req,res)=>{
     users.findOne({username:req.body.username,password:req.body.password},(err,doc)=>{
         if(doc){
             jwt.sign({username_user:req.body.username},process.env.JWT_SECRET_KEY,(err,token)=>{
-                res.cookie("auth_token",token)
+                res.cookie("auth_token",token);
                 res.send({user:req.body.username})
             },{expiresInseconds:5})
         }else{
