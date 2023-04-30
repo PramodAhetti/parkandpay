@@ -2,8 +2,8 @@ let express=require('express')
 let route=express.Router();
 let users=require('../../data/user/User')
 let sellers=require('../../data/seller/Seller')
-let park=require('../../data/parkspots/Parkspots')
-let jwt=require('jsonwebtoken')
+let jwt=require('jsonwebtoken');
+const Parkspots = require('../../data/parkspots/Parkspots');
 let authenticate=(req,res,next)=>{
       if(req.cookies.auth_token){
         jwt.verify(req.cookies.auth_token,process.env.JWT_SECRET_KEY,(err,doc)=>{
@@ -48,14 +48,14 @@ route.post('/login',(req,res)=>{
             res.status(500).send({error:"try again"});
         }
         if(doc){
-            jwt.sign({user_id:doc.id},process.env.JWT_SECRET_KEY,(err,token)=>{
+            jwt.sign({user_id:doc.id},process.env.JWT_SECRET_KEY,{expiresIn:'2h'},(err,token)=>{
                       if(err){
                         res.status(500).send({error:"try again"});
                       }else{
                         res.cookie("auth_token",token);
                         res.send({user:req.body.username})
                       }
-            },{expiresInseconds:5})
+            })
         }else{
             res.status(400).send({message:"user doesnt exists"})
         }
@@ -63,13 +63,14 @@ route.post('/login',(req,res)=>{
 })
 
 route.post('/sell',authenticate,(req,res)=>{
-    park.findOne({user_id:req.body.user_id},(err,docs)=>{
+    Parkspots.findOne({owned_id:req.body.user_id},(err,docs)=>{
         if(!docs){
-           let newspot=new park({
-            user_id:req.body.user_id,
+           let newspot=new Parkspots({
+            owned_id:req.body.user_id,
             latitude:req.body.latitude,
             longitude:req.body.longitude,
             phoneno:req.body.phoneno,
+            bookedby:"null",
             status:0
            })
            newspot.save();
@@ -77,11 +78,23 @@ route.post('/sell',authenticate,(req,res)=>{
         }else{
            res.send('Parking spot exists already');
         }
-    })
+    });
 })
 
+route.post('/book',authenticate,(req,res)=>{
+        Parkspots.updateOne({owned_id:req.body.owned_id},{$set:{status:"1",bookedby:req.body.user_id}},(err,doc)=>{
+            if(err){
+                res.status(500).send({error:"try again"});
+            }else{
+                res.send("Booked the spot");
+            }
+        }); 
+})
+
+
+
 route.post('/near',authenticate,(req,res)=>{
-        sellers.find({latitude:{$gt:(req.body.latitude-req.body.radius),$lt:(req.body.latitude+req.body.radius)},longitude:{$gt:(req.body.longitude-req.body.radius),$lt:(req.body.longitude+req.body.radius)}},(err,docs)=>{
+        Parkspots.find({latitude:{$gt:(req.body.latitude-req.body.radius),$lt:(req.body.latitude+req.body.radius)},longitude:{$gt:(req.body.longitude-req.body.radius),$lt:(req.body.longitude+req.body.radius)}},(err,docs)=>{
             res.send(docs);
          })
     })
