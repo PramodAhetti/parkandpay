@@ -2,17 +2,24 @@ let express=require('express')
 let route=express.Router();
 let users=require('../../data/user/User')
 let sellers=require('../../data/seller/Seller')
+let park=require('../../data/parkspots/Parkspots')
 let jwt=require('jsonwebtoken')
 let authenticate=(req,res,next)=>{
-     jwt.verify(req.cookies.auth_token,process.env.JWT_SECRET_KEY,(err,doc)=>{
-          if(doc.username_user){
-            req.body.username=doc.username_user;
-            next();
-          }else{
-            res.status(500).send({error:"user  login required"})
-          }
-     })
+      if(req.cookies.auth_token){
+        jwt.verify(req.cookies.auth_token,process.env.JWT_SECRET_KEY,(err,doc)=>{
+            if(!err){
+              req.body.user_id=doc.user_id;
+              next();
+            }else{
+              res.status(500).send({error:"Invalid token"});
+            }
+       })
+      }else{
+        res.status(500).send({message:"Login required"});
+      }
 }
+
+
 
 route.post('/new',(req,res)=>{
     users.findOne({username:req.body.username},(err,doc)=>{
@@ -37,10 +44,17 @@ route.post('/new',(req,res)=>{
 
 route.post('/login',(req,res)=>{
     users.findOne({username:req.body.username,password:req.body.password},(err,doc)=>{
+        if(err){
+            res.status(500).send({error:"try again"});
+        }
         if(doc){
-            jwt.sign({username_user:req.body.username},process.env.JWT_SECRET_KEY,(err,token)=>{
-                res.cookie("auth_token",token);
-                res.send({user:req.body.username})
+            jwt.sign({user_id:doc.id},process.env.JWT_SECRET_KEY,(err,token)=>{
+                      if(err){
+                        res.status(500).send({error:"try again"});
+                      }else{
+                        res.cookie("auth_token",token);
+                        res.send({user:req.body.username})
+                      }
             },{expiresInseconds:5})
         }else{
             res.status(400).send({message:"user doesnt exists"})
@@ -48,6 +62,23 @@ route.post('/login',(req,res)=>{
     })
 })
 
+route.post('/sell',authenticate,(req,res)=>{
+    park.findOne({user_id:req.body.user_id},(err,docs)=>{
+        if(!docs){
+           let newspot=new park({
+            user_id:req.body.user_id,
+            latitude:req.body.latitude,
+            longitude:req.body.longitude,
+            phoneno:req.body.phoneno,
+            status:0
+           })
+           newspot.save();
+           res.send('saved parking spot');
+        }else{
+           res.send('Parking spot exists already');
+        }
+    })
+})
 
 route.post('/near',authenticate,(req,res)=>{
         sellers.find({latitude:{$gt:(req.body.latitude-req.body.radius),$lt:(req.body.latitude+req.body.radius)},longitude:{$gt:(req.body.longitude-req.body.radius),$lt:(req.body.longitude+req.body.radius)}},(err,docs)=>{
