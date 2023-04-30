@@ -91,13 +91,25 @@ route.post('/sell',authenticate,(req,res)=>{
 
 
 route.post('/book',authenticate,(req,res)=>{
-        Parkspots.updateOne({owned_id:req.body.owned_id},{$set:{status:"1",bookedby:req.body.user_id,bookedtime:Date.now()}},(err,doc)=>{
+        Parkspots.findOne({owned_id:req.body.owned_id},(err,docs)=>{
             if(err){
                 res.status(500).send({error:"try again"});
-            }else{
-                res.send("Booked the spot");
             }
-        }); 
+            if(docs){
+                if(docs.status==0){
+                    Parkspots.updateOne({owned_id:req.body.owned_id},{$set:{status:"1",bookedby:req.body.user_id,bookedtime:Date.now()}},(err,doc)=>{
+                        if(err){
+                            res.status(500).send({error:"try again"});
+                        }
+                        res.send({message:"Booked the parking spot"})
+                    }); 
+                }else{
+                    res.send({message:"This spot is already booked by someone "})
+                }
+            }else{
+                res.send({message:"Enter correct owner_id"});
+            }
+        });
 })
 
 route.post('/cancel',authenticate,(req,res)=>{
@@ -114,7 +126,7 @@ route.post('/cancel',authenticate,(req,res)=>{
                         let log=new history({
                             booked_by:req.body.user_id,
                             owner_id:data.owned_id,
-                            cost:costofpark(Date.now(),timeofbooking)
+                            cost:process.env.cost*costofpark(Date.now(),timeofbooking)
                         })
                         log.save();
                         res.send(`Cancelled the spot owned by ${data.owned_id} you have to pay `+process.env.cost*(costofpark(Date.now(),timeofbooking)));
