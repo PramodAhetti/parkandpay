@@ -1,3 +1,4 @@
+const { time } = require('console');
 const mongoose=require('mongoose');
 let parkspots=mongoose.Schema({
     owned_id:{type:String,required:true},
@@ -5,6 +6,7 @@ let parkspots=mongoose.Schema({
     longitude:{type:Number,required:true},
     phoneno:{type:Number,required:true},
     status:{type:Boolean,required:true},
-    bookedby:{type:String,required:true}
+    bookedby:{type:String,required:true},
+    bookedtime:{type:Date,required:true}
 })
 module.exports=mongoose.model('Parkspots',parkspots);
