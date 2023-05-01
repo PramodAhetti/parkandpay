@@ -18,7 +18,7 @@ let authenticate=(req,res,next)=>{
               req.body.user_id=doc.user_id;
               next();
             }else{
-              res.status(500).send({error:"Invalid token"});
+              res.status(401).json({message:"Login required token is invalid"});
             }
        })
       }else{
@@ -55,12 +55,12 @@ route.post('/login',(req,res)=>{
             res.status(500).send({error:"try again"});
         }
         if(doc){
-            jwt.sign({user_id:doc.id},process.env.JWT_SECRET_KEY,{expiresIn:'2h'},(err,token)=>{
+            jwt.sign({user_id:doc.id},process.env.JWT_SECRET_KEY,{expiresIn:'1h'},(err,token)=>{
                       if(err){
                         res.status(500).send({error:"try again"});
                       }else{
                         res.cookie("auth_token",token);
-                        res.send({user:req.body.username})
+                        res.send({user_id:doc.id})
                       }
             })
         }else{
@@ -99,15 +99,15 @@ route.post('/book',authenticate,(req,res)=>{
                 if(docs.status==0){
                     Parkspots.updateOne({owned_id:req.body.owned_id},{$set:{status:"1",bookedby:req.body.user_id,bookedtime:Date.now()}},(err,doc)=>{
                         if(err){
-                            res.status(500).send({error:"try again"});
+                            res.status(400).send({message:"try again"});
                         }
                         res.send({message:"Booked the parking spot"})
                     }); 
                 }else{
-                    res.send({message:"This spot is already booked by someone "})
+                    res.status(400).json({message:"This spot is already booked by someone "})
                 }
             }else{
-                res.send({message:"Enter correct owner_id"});
+                res.status(400).json({message:"Enter correct owner_id"});
             }
         });
 })
@@ -117,7 +117,7 @@ route.post('/cancel',authenticate,(req,res)=>{
         if(err){
             res.status(500).send({error:"try again"});
         }else{
-            if(data ){
+            if(data){
                 let timeofbooking=data.bookedtime;
                 Parkspots.updateOne({bookedby:req.body.user_id},{$set:{status:"0",bookedby:"",bookedtime:Date.now()}},(err,doc)=>{
                     if(err){
@@ -129,19 +129,23 @@ route.post('/cancel',authenticate,(req,res)=>{
                             cost:process.env.cost*costofpark(Date.now(),timeofbooking)
                         })
                         log.save();
-                        res.send(`Cancelled the spot owned by ${data.owned_id} you have to pay `+process.env.cost*(costofpark(Date.now(),timeofbooking)));
+                        res.send({message:`Cancelled the parking spot`});
                     }
                 })
             }else{
-                res.send({message:"You havent booked any parking space"});
+                res.status(400).send({message:"You havent booked any parking space"});
             }
         }
     }); 
 })
 
 route.post('/near',authenticate,(req,res)=>{
-        Parkspots.find({latitude:{$gt:(req.body.latitude-req.body.radius),$lt:(req.body.latitude+req.body.radius)},longitude:{$gt:(req.body.longitude-req.body.radius),$lt:(req.body.longitude+req.body.radius)}},(err,docs)=>{
-            res.send(docs);
+        Parkspots.find({status:0,latitude:{$gt:(req.body.latitude-req.body.radius),$lt:(req.body.latitude+req.body.radius)},longitude:{$gt:(req.body.longitude-req.body.radius),$lt:(req.body.longitude+req.body.radius)}},(err,docs)=>{
+            if(!err){
+                res.send(docs);
+            }else{
+                res.status(400).json({message:"No parking spots found near you"});
+            }
          })
     })
 
