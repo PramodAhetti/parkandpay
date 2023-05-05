@@ -1,0 +1,155 @@
+*{ 
+  font-family:'Courier New', Courier, monospace;
+  font-weight: bold;
+  color:black;
+
+} 
+
+.input{
+  border:solid 0.3vw black;
+}
+.description{
+  grid-column: 1/13 ;
+  grid-row: 5/9;
+}
+.title{
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  text-shadow: 0.5vw 0.5vw 0.5vw rgb(118, 116, 116);
+  font-size: 15vw;
+}
+.desc{
+  padding: 3vw;
+  font-size:2vw;
+}
+.mapbox{
+  border:solid 0.2vw rgb(141, 136, 136);
+    padding: 2vw;
+    border-radius: 1.5vw;
+    grid-row: 3/9;
+    grid-column: 3/11;
+
+}
+.searchbox{
+  margin: 0.2vw;
+  display: flex;
+  flex-direction: row;
+  
+  justify-content: space-around;
+  grid-row: 10/11;
+  grid-column: 3/11;
+}
+.location, .find{
+       border-radius: 1.5vw;
+       font-size: 1.2vw;
+       text-align: center;
+       border:solid 0.2vw rgb(141, 136, 136);
+}
+.location{
+  width: 40vw;
+}
+.find{
+  width: 10vw;
+ 
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+.box-container{
+
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(12,1fr);
+  grid-template-rows:repeat(12,1fr); 
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-size: 100%;
+  height: 100vh;
+  width: 100%;
+}
+/* .findbox{
+  border: solid 1 black;
+} */
+.pages{
+  padding: 1vw;
+  text-decoration: none;
+  margin: 0.5vw;
+  font-size: 1.5vw;
+  
+}
+.style{
+ background-color: rgb(226, 226, 226);
+ box-shadow: 10px 15px 10px rgb(200, 200, 200);
+ grid-row: 2/12;
+ grid-column: 2/12;
+ border-radius: 3vw;
+}
+.logo{
+  margin-left: 30px;
+  height: 6.2vh;
+  width: 3.2vw;
+  border-radius: 25px;
+}
+.box ,.navcontainer{
+  font-size: 1em;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+.navcontainer{
+  grid-column: 1/13;
+  grid-row: 1;
+}
+
+.item{
+  /* border:solid 1px black; */
+}
+
+.loginbox,.signupbox{
+  grid-row: 4/10;
+  grid-column: 5/9;
+  border:solid 0.2vw rgb(133, 129, 129);
+  border-radius: 1.5vw;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.login_box,.titleforloginandsignup{
+  margin: 0.2vh;
+  text-align: center;
+  border-radius: 1.5vw;
+  font-size: 1.2vw;
+  width: 25vw;
+  height: 8vh;
+}
+.titleforloginandsignup{
+  font-size: 2.5vw;
+}
+.submit{
+  font-size: 1vw;
+  text-align: center;
+  border-radius: 1.5vw;
+ width: 7vw;
+ height: 6vh;
+}
+.leaflet-marker-icon, .leaflet-routing-alt{
+  font-size: 0px;
+  display: none;
+  alt: none;
+}
+.aboutbox{
+  border-radius:2vw;
+  display: flex;
+  flex-direction: column;
+  grid-row: 3/11;
+  grid-column: 3/11;
+  font-size: 1.1em;
+  padding: 1vw;
+}
+.heading{
+ font-size:2.2em; 
+ text-align: center;
+}

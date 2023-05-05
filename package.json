@@ -3,13 +3,18 @@
   "version": "1.0.0",
   "description": "This a project of second year computer science for pbl",
   "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "scripts":  {
+    "start": "node server",
+    "server": "nodemon server --port 4000",
+    "client": "npm start --prefix client --port 3000",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.2",
+    "concurrently": "^8.0.1",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
