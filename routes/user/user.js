@@ -42,7 +42,8 @@ route.post('/new',(req,res)=>{
             jwt.sign({username_user:req.body.username},process.env.JWT_SECRET_KEY,(err,token)=>{
                 user.save();
                 res.cookie("auth_token",token);
-                res.send({message:"user saved"})
+                console.log(user.id)
+                res.send({auth_token:token,user_id:user.id})
             },{expiresInseconds:5})
         }
     })
@@ -60,7 +61,8 @@ route.post('/login',(req,res)=>{
                         res.status(500).send({error:"try again"});
                       }else{
                         res.cookie("auth_token",token);
-                        res.send({user_id:doc.id})
+                        res.send({auth_token:token,user_id:doc.id});
+                        console.log(doc.id);
                       }
             })
         }else{
@@ -71,20 +73,22 @@ route.post('/login',(req,res)=>{
 
 route.post('/sell',authenticate,(req,res)=>{
     Parkspots.findOne({owned_id:req.body.user_id},(err,docs)=>{
+        if(err){
+            res.status(500).send({message:"try again"});
+        }
         if(!docs){
            let newspot=new Parkspots({
             owned_id:req.body.user_id,
             latitude:req.body.latitude,
             longitude:req.body.longitude,
-            phoneno:req.body.phoneno,
             bookedby:"null",
             bookedtime:Date.now(),
             status:0
            })
            newspot.save();
-           res.send('saved parking spot');
+           res.send({message:'saved parking spot'});
         }else{
-           res.send('Parking spot exists already');
+           res.send({message:'You are already selling a parking spot'});
         }
     });
 })
