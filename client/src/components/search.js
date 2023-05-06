@@ -5,13 +5,12 @@ import userdetails from '../context/userdetails/userdetail'
 export default function Search() {
 
   let userstate=useContext(userdetails);
-
   function near(){
          navigator.geolocation.getCurrentPosition((data)=>{
           let pos={
             latitude:data.coords.latitude,
             longitude:data.coords.longitude,
-            radius:0.5
+            radius:100
           }
           userstate.near(pos);
 
@@ -19,7 +18,7 @@ export default function Search() {
     );
   }
   return (
-    <>  
+    <>  <button className='next find' onClick={userstate.updatecurrentspot}>Next</button>
         <Map className="mapbox" lat={userstate.currentspot.latitude} lon={userstate.currentspot.longitude}></Map>
         <center className='searchbox'>
         <input placeholder="Location find" className="searchbar location"></input>

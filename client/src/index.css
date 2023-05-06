@@ -29,6 +29,12 @@
     grid-column: 3/11;
 
 }
+.next{
+  margin: 0.5vw;
+  grid-row:6;
+  grid-column: 11;
+
+}
 .searchbox{
   margin: 0.2vw;
   display: flex;

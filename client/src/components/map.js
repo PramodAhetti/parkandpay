@@ -18,8 +18,8 @@ const customIcon = L.icon({
 function Map({ lat, lon }) {
   var current=useContext(userdetails);
   current=current.userposition;
-  console.log(current);
-  console.log(lat,lon)
+  // console.log(current);
+  // console.log(lat,lon)
   React.useEffect(() => {
     const map = L.map("map").setView([lat, lon], 13);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {

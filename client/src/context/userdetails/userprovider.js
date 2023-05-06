@@ -3,9 +3,8 @@ import Userdetails from './userdetail'
 import axios from 'axios';
 export default function Provider({children}) {
     
-    const [currentspot,setspot]=useState({latitude:13,longitude:85});
-
-    
+    const [currentspot,setcurrentspot]=useState({latitude:13,longitude:85});
+    const [nearspots,setnearspots]=useState('');
     const [userposition,setuserposition]=useState({
         "latitude":13,
         "longitude":85
@@ -41,9 +40,11 @@ export default function Provider({children}) {
         setuserposition(pos);
         pos.user_id=localStorage.getItem("user_id")
         axios.post('user/near', pos).then((info)=>{
-            console.log(info.data)
             if(info.data!=''){
-              setspot(info.data[0]);
+              setnearspots(info.data);
+              info.data[0].index=0;
+              console.log(info.data)
+              setcurrentspot(info.data[0]);
               alert("Showing nearest spot");
             }else{
               alert("No parking spots found");
@@ -52,8 +53,28 @@ export default function Provider({children}) {
                     alert(error.response.data.message);
             })
     }
+
+    function updatecurrentspot(){
+        console.log("hi");
+        if(nearspots!=""){
+          let index=currentspot.index+1;
+          if(index<nearspots.length){
+             let nextspot=nearspots[index];
+             nextspot.index=index;
+             console.log(nextspot)
+             setcurrentspot(nextspot);
+          }else{
+             index=0;
+             let nextspot=nearspots[index];
+             nextspot.index=index;
+             setcurrentspot(nextspot);
+          }
+        }else{
+          alert('No parking spots near you')
+        }
+    }
     return (
-    <Userdetails.Provider value={{currentspot,userposition,near,cancel,book,sell}}>
+    <Userdetails.Provider value={{currentspot,updatecurrentspot,userposition,near,cancel,book,sell}}>
         {children}
     </Userdetails.Provider>
   )
