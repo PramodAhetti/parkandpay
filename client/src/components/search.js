@@ -10,7 +10,7 @@ export default function Search() {
           let pos={
             latitude:data.coords.latitude,
             longitude:data.coords.longitude,
-            radius:100
+            radius:0.5
           }
           userstate.near(pos);
 

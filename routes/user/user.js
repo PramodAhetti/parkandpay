@@ -94,25 +94,35 @@ route.post('/sell',authenticate,(req,res)=>{
 
 
 route.post('/book',authenticate,(req,res)=>{
-        Parkspots.findOne({owned_id:req.body.owned_id},(err,docs)=>{
-            if(err){
-                res.status(500).send({error:"try again"});
-            }
-            if(docs){
-                if(docs.status==0){
-                    Parkspots.updateOne({owned_id:req.body.owned_id},{$set:{status:"1",bookedby:req.body.user_id,bookedtime:Date.now()}},(err,doc)=>{
-                        if(err){
-                            res.status(400).send({message:"try again"});
-                        }
-                        res.send({message:"Booked the parking spot"})
-                    }); 
-                }else{
-                    res.status(400).json({message:"This spot is already booked by someone "})
-                }
+        try{
+        Parkspots.findOne({bookedby:req.body.user_id},(err,doc)=>{
+            if(doc){
+                res.send({message:"Already booked a parking spot"})
             }else{
-                res.status(400).json({message:"Enter correct owner_id"});
+                Parkspots.findOne({owned_id:req.body.owned_id},(err,docs)=>{
+                    if(err){
+                        res.status(500).send({error:"try again"});
+                    }
+                    if(docs){
+                        if(docs.status==0){
+                            Parkspots.updateOne({owned_id:req.body.owned_id},{$set:{status:"1",bookedby:req.body.user_id,bookedtime:Date.now()}},(err,doc)=>{
+                                if(err){
+                                    res.status(400).send({message:"try again"});
+                                }
+                                res.send({message:"Booked the parking spot"})
+                            }); 
+                        }else{
+                            res.status(400).json({message:"This spot is already booked by someone "})
+                        }
+                    }else{
+                        res.status(400).json({message:"Enter correct owner_id"});
+                    }
+                });
             }
         });
+        }catch(error){
+            res.status(400).send({message:"try again"});
+        }
 })
 
 route.post('/cancel',authenticate,(req,res)=>{
@@ -143,7 +153,7 @@ route.post('/cancel',authenticate,(req,res)=>{
 })
 
 route.post('/near',authenticate,(req,res)=>{
-        Parkspots.find({status:0,owned_id:{$ne:req.body.user_id},latitude:{$gt:(req.body.latitude-req.body.radius),$lt:(req.body.latitude+req.body.radius)},longitude:{$gt:(req.body.longitude-req.body.radius),$lt:(req.body.longitude+req.body.radius)}},(err,docs)=>{
+        Parkspots.find({$or:[{status:0},{bookedby:req.body.user_id}],owned_id:{$ne:req.body.user_id},latitude:{$gt:(req.body.latitude-req.body.radius),$lt:(req.body.latitude+req.body.radius)},longitude:{$gt:(req.body.longitude-req.body.radius),$lt:(req.body.longitude+req.body.radius)}},(err,docs)=>{
             if(!err){
                 console.log(docs);
                 res.send(docs);
