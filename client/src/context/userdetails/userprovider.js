@@ -32,13 +32,14 @@ export default function Provider({children}) {
     async function sell(){
       try{
         let res=await axios.post('/user/sell',{latitude:userposition.latitude,longitude:userposition.longitude,owned_id:localStorage.getItem('user_id')});
-        alert(res.data.message);
+        alert(`${res.data.message} at your current location`);
      }catch(error){
         alert(error.response.data.message)
      }     
     }
     function near(pos){
         setuserposition(pos);
+        pos.user_id=localStorage.getItem("user_id")
         axios.post('user/near', pos).then((info)=>{
             console.log(info.data)
             if(info.data!=''){

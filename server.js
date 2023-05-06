@@ -19,7 +19,6 @@ app.get('/home',(req,res)=>{
 })
 app.use(bodyparser.json())
 app.use('/user',require('./routes/user/user'))
-app.use('/seller',require('./routes/seller/seller'))
 
 app.listen(port,()=>{
     console.log(`server started at port ${port}`)

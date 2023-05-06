@@ -14,7 +14,7 @@
 }
 .title{
   font-family:Georgia, 'Times New Roman', Times, serif;
-  text-shadow: 0.5vw 0.5vw 0.5vw rgb(118, 116, 116);
+  text-shadow: 0.7vw 0vw rgb(136, 134, 134);
   font-size: 15vw;
 }
 .desc{
@@ -73,15 +73,17 @@ body {
   border: solid 1 black;
 } */
 .pages{
+
   padding: 1vw;
   text-decoration: none;
   margin: 0.5vw;
-  font-size: 1.5vw;
+  font-size: 1.55vw;
   
 }
-.style{
+.style{ 
+
  background-color: rgb(226, 226, 226);
- box-shadow: 10px 15px 10px rgb(200, 200, 200);
+ box-shadow:  30px 30px 20px rgb(82, 79, 79);
  grid-row: 2/12;
  grid-column: 2/12;
  border-radius: 3vw;
