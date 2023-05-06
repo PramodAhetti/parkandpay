@@ -3,10 +3,13 @@ This a web project to book neareast parking spots based on our current location 
 
 # Frontend using React
 #usecontext for state management.
+#react-router for routing in frontend
 # Backend using express
 #mongodb-database
+#jwt for login-token
 
-#To use create a .env file
+# To use 
+create a .env file
 with all these environment variables 
 PORT=4000
 MONGO_DB=
