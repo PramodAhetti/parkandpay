@@ -13,6 +13,11 @@ export default function Provider({children}) {
     async function book(){
         try{
              let res=await axios.post('/user/book',{owned_id:currentspot.owned_id,user_id:localStorage.getItem('user_id')});
+            //  let updatedcurspot=currentspot;
+            //  updatedcurspot.status=false;
+             setcurrentspot({...currentspot,status:true});
+             console.log("from book",currentspot);
+             nearspots[currentspot.index].status=true;
              alert(res.data.message);
           }catch(error){
              alert(error.response.data.message)
@@ -21,8 +26,11 @@ export default function Provider({children}) {
 
 
     async function cancel(){
-        try{
-             let res=await axios.post('/user/cancel');
+        try{ 
+             let res=await axios.post('/user/cancel',{bookedby:localStorage.getItem('user_id')});
+             currentspot.status=false;
+             updatecurrentspot(currentspot);
+             nearspots[currentspot.index].status=false;
              alert(res.data.message);
           }catch(error){
              alert(error.response.data.message)

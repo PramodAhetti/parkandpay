@@ -133,6 +133,15 @@ body {
   width: 25vw;
   height: 8vh;
 }
+.titleforsearch{
+  text-align: center;
+  border:solid 0.2vw rgb(133, 129, 129);
+  border-radius: 1.5vw;
+  font-size: 3.2vw;
+  grid-row: 2;
+  grid-column: 6/9;
+  margin: 2vh;
+}
 .titleforloginandsignup{
   font-size: 2.5vw;
 }

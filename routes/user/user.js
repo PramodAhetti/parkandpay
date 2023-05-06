@@ -97,7 +97,7 @@ route.post('/book',authenticate,(req,res)=>{
         try{
         Parkspots.findOne({bookedby:req.body.user_id},(err,doc)=>{
             if(doc){
-                res.send({message:"Already booked a parking spot"})
+                res.send({message:"You have booking already"})
             }else{
                 Parkspots.findOne({owned_id:req.body.owned_id},(err,docs)=>{
                     if(err){
