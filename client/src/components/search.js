@@ -11,7 +11,7 @@ export default function Search() {
           let pos={
             latitude:data.coords.latitude,
             longitude:data.coords.longitude,
-            radius:10
+            radius:0.5
           }
           userstate.near(pos);
 
@@ -19,7 +19,7 @@ export default function Search() {
     );
   }
   return (
-    <>
+    <>  
         <Map className="mapbox" lat={userstate.currentspot.latitude} lon={userstate.currentspot.longitude}></Map>
         <center className='searchbox'>
         <input placeholder="Location find" className="searchbar location"></input>

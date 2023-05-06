@@ -1,7 +1,6 @@
 let express=require('express')
 let route=express.Router();
 let users=require('../../data/user/User')
-let sellers=require('../../data/seller/Seller')
 let jwt=require('jsonwebtoken');
 const Parkspots = require('../../data/parkspots/Parkspots');
 const history = require('../../data/log/history.js');
@@ -144,8 +143,9 @@ route.post('/cancel',authenticate,(req,res)=>{
 })
 
 route.post('/near',authenticate,(req,res)=>{
-        Parkspots.find({status:0,latitude:{$gt:(req.body.latitude-req.body.radius),$lt:(req.body.latitude+req.body.radius)},longitude:{$gt:(req.body.longitude-req.body.radius),$lt:(req.body.longitude+req.body.radius)}},(err,docs)=>{
+        Parkspots.find({status:0,owned_id:{$ne:req.body.user_id},latitude:{$gt:(req.body.latitude-req.body.radius),$lt:(req.body.latitude+req.body.radius)},longitude:{$gt:(req.body.longitude-req.body.radius),$lt:(req.body.longitude+req.body.radius)}},(err,docs)=>{
             if(!err){
+                console.log(docs);
                 res.send(docs);
             }else{
                 res.status(400).json({message:"No parking spots found near you"});
