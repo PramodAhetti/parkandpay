@@ -135,7 +135,6 @@ body {
 }
 .titleforsearch{
   text-align: center;
-  border:solid 0.2vw rgb(133, 129, 129);
   border-radius: 1.5vw;
   font-size: 3.2vw;
   grid-row: 2;

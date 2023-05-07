@@ -26,7 +26,7 @@ export default function Provider({children}) {
 
 
     async function cancel(){
-        try{ 
+        try{
              let res=await axios.post('/user/cancel',{bookedby:localStorage.getItem('user_id')});
              currentspot.status=false;
              updatecurrentspot(currentspot);
