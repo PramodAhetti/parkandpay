@@ -18,8 +18,9 @@ export default function Authprovider({children}) {
           alert("Try again username exists")
          }else{
           alert("Logged in")
-          setuser({username:details.username,auth_token:info.data.auth_token});
+          setuser({username:details.username});
           localStorage.setItem('user_id',info.data.user_id);
+          localStorage.setItem('auth_token',info.data.auth_token);
          }
       }catch(err){
         alert("Something went wrong try again");

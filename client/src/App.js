@@ -14,7 +14,7 @@ function App() {
 
 <BrowserRouter>
   <div className='box-container'>
-    <div className="style"></div>
+    {/* <div className="style"></div> */}
     <Navigation className='item' />
     <Userdetail>
     <Routes>

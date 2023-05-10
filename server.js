@@ -3,7 +3,7 @@ const morgan=require('morgan');
 const dotenv=require('dotenv').config()
 const bodyparser=require('body-parser')
 const cookieparser=require('cookie-parser')
-let port=process.env.PORT||5000
+let port=process.env.PORT;
 const app=express();
 app.use(cookieparser())
 const use=1;

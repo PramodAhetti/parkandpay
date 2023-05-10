@@ -6,7 +6,7 @@
   "scripts":  {
     "start": "node server",
     "server": "nodemon server --port 4000",
-    "client": "npm start --prefix client --port 3000",
+    "client": "npm start --prefix client --port 5000",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
