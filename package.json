@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "This a project of second year computer science for pbl",
   "main": "server.js",
-  "scripts":  {
+  "scripts": {
     "start": "node server",
     "server": "nodemon server --port 4000",
     "client": "npm start --prefix client --port 5000",
@@ -21,6 +21,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.9.2",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "opencage-api-client": "^1.0.1"
   }
 }

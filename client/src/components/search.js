@@ -1,5 +1,6 @@
 import React from 'react'
 import Map from '../components/map'
+import Displayinfo from '../components/info'
 import { useContext } from 'react'
 import userdetails from '../context/userdetails/userdetail'
 export default function Search() {
@@ -20,7 +21,8 @@ export default function Search() {
   return (
     <>  
         <div className='titleforsearch'> Park N Pay</div>
-        <button className='next find' onClick={userstate.updatecurrentspot}>Next</button>
+
+        <Displayinfo curspot={userstate.currentspot}></Displayinfo>
         <Map className="mapbox" lat={userstate.currentspot.latitude} lon={userstate.currentspot.longitude}></Map>
         <center className='searchbox'>
         <input placeholder="Location find" className="searchbar location"></input>
@@ -30,7 +32,7 @@ export default function Search() {
         (<button className ="searchbar find" onClick={userstate.cancel}>cancel</button>)
         :(<button className ="searchbar find" onClick={userstate.book}>book</button>)
         }
-
+        <button className='searchbar find' onClick={userstate.updatecurrentspot}>Next</button>
         <button className ="searchbar find" onClick={userstate.sell}>Sell</button>
     </center>
     </>
