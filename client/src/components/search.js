@@ -20,7 +20,6 @@ export default function Search() {
   }
   return (
     <>  
-        <div className='titleforsearch'> Park N Pay</div>
 
         <Displayinfo curspot={userstate.currentspot}></Displayinfo>
         <Map className="mapbox" lat={userstate.currentspot.latitude} lon={userstate.currentspot.longitude}></Map>

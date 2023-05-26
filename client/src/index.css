@@ -9,25 +9,35 @@
   border:solid 0.3vw black;
 }
 .description{
+ 
   grid-column: 1/13 ;
   grid-row: 7/9;
 }
+.homeimg{
+  height: 60vh;
+  width: 40vw;
+  grid-column: 15/21;
+  grid-row:5/20;
+  border-radius: 5vw;
+}
 .title{
-  font-family:Georgia, 'Times New Roman', Times, serif;
-  text-shadow: 1vw 1vw 1vw rgb(19, 19, 19);
-  font-size: 15vw;
+ font-family: 'Berkshire Swash', Helvetica, sans-serif;;
   border-radius: 10vw;
+  font-size: 10vw;
+  color:white;
+  text-shadow: #05386B 0.7vw 0.8vw ;
 }
 .desc{
   padding: 3vw;
   font-size:2vw;
+  color:#05386B;
 }
 .mapbox{
   border:solid 0.2vw rgb(141, 136, 136);
     padding: 2vw;
     border-radius: 1.5vw;
-    grid-row: 3/10;
-    grid-column: 3/11;
+    grid-row: 5/17;
+    grid-column: 3/20;
 
 }
 .next{
@@ -40,11 +50,10 @@
   margin: 0.2vw;
   display: flex;
   flex-direction: row;
-  background-color: rgba(33, 29, 29, 0.6);
-  
+ 
   justify-content: space-around;
-  grid-row: 11/11;
-  grid-column: 3/11;
+  grid-row: 18/20;
+  grid-column: 3/20;
 }
 .location, .find{
        color: black;
@@ -67,23 +76,19 @@ body {
 }
 .box-container{
 
-  overflow: hidden;
+  background-color: #5CDB95;
   display: grid;
-  grid-template-columns: repeat(12,1fr);
-  grid-template-rows:repeat(12,1fr); 
-  background-color: black;
-  background-image: url(https://wallpaperaccess.com/full/2996087.jpg) ;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size:cover;
   height: 100vh;
   width: 100%;
+  overflow: hidden;
+  grid-template-rows: repeat(21,1fr);
+  grid-template-columns: repeat(21,1fr);
 }
 /* .findbox{
   border: solid 1 black;
 } */
 .pages{
-
+  color:#05386B;
   padding: 1vw;
   text-decoration: none;
   margin: 0.5vw;
@@ -111,18 +116,25 @@ body {
   justify-content: space-between;
 }
 .navcontainer{
-  background-color: rgba(33, 29, 29, 0.6);
-  grid-column: 1/13;
-  grid-row: 1;
+  color:black;
+  background-color: aquamarine;
+  border: solid ;
+  border-radius: 1vw;
+  padding: 1vw;
+  grid-row: 2;
+  grid-column: 2/21;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .item{
   /* border:solid 1px black; */
 }
 .loginbox,.signupbox{
-  grid-row: 4/10;
-  background-color: rgba(33, 29, 29, 0.6);
-  grid-column: 5/9;
+  grid-row: 6/18;
+  background-color: rgba(33, 29, 29, 0.9);
+  grid-column: 5/16;
   border:solid 0.2vw rgb(133, 129, 129);
   border-radius: 1.5vw;
   display: flex;
@@ -170,10 +182,10 @@ body {
   border-radius:2vw;
   display: flex;
   flex-direction: column;
-  grid-row: 3/11;
-  grid-column: 3/11;
+  grid-row: 5/20;
+  grid-column: 3/20;
   font-size: 1.1em;
-  padding: 1vw;
+  padding: 2vw;
 }
 .heading{
  font-size:2.2em; 
