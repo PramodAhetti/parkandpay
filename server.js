@@ -1,25 +1,29 @@
-const express=require('express')
-const morgan=require('morgan');
-const dotenv=require('dotenv').config()
-const bodyparser=require('body-parser')
-const cookieparser=require('cookie-parser')
-let port=process.env.PORT;
+const express=require('express');
+const connectDB=require('./config/db');
 const app=express();
-app.use(cookieparser())
-const use=1;
-app.use(morgan('dev'));
-const mongoose=require('mongoose')
-mongoose.set('strictQuery', true);
+const cors = require('cors');
+const morgan = require('morgan')
+const bodyparser=require('body-parser')
+require('dotenv').config();
 
-mongoose.connect(process.env.MONGO_DB,()=>{
-    console.log("connected to db")
-})
-app.get('/home',(req,res)=>{
-    res.send({home:"hi from backend"});
-})
+
+//connecting to database
+connectDB();
+app.use(cors());
+//middleware
 app.use(bodyparser.json())
-app.use('/user',require('./routes/user/user'))
+app.use(morgan('dev'))
 
-app.listen(port,()=>{
-    console.log(`server started at port ${port}`)
-})
+
+//routes
+app.get('/main',(req,res)=>res.send({name:"pramod",token:"adfa5545421212121",user_id:"ad4fa65df4a5dfaa"}));
+
+app.use('/user',require('./routes/api/users'));
+app.use('/msg',require('./routes/api/message'));
+app.use('/post',require('./routes/api/post'));
+app.use('/profile',require('./routes/api/profile'));
+
+const PORT=process.env.PORT || 5000;
+
+
+app.listen(PORT,()=>console.log(`server running on port ${PORT}`))
