@@ -1,82 +1,51 @@
-*{ 
-  font-family:'Courier New', Courier, monospace;
-  font-weight: bold;
-  color:white;
-
-} 
-
-.input{
-  border:solid 0.3vw black;
+*{
+  font-family:monospace;
+  font-weight: bolder;
+  text-decoration: none;
+  color: black;
 }
-.description{
- 
-  grid-column: 1/13 ;
-  grid-row: 7/9;
-}
-.homeimg{
-  height: 60vh;
-  width: 40vw;
-  grid-column: 15/21;
-  grid-row:5/20;
-  border-radius: 5vw;
-}
-.title{
- font-family: 'Berkshire Swash', Helvetica, sans-serif;;
-  border-radius: 10vw;
-  font-size: 10vw;
-  color:white;
-  text-shadow: #05386B 0.7vw 0.8vw ;
-}
-.desc{
-  padding: 3vw;
-  font-size:2vw;
-  color:#05386B;
-}
-.mapbox{
-  border:solid 0.2vw rgb(141, 136, 136);
-    padding: 2vw;
-    border-radius: 1.5vw;
-    grid-row: 5/17;
-    grid-column: 3/20;
-
-}
-.next{
-  margin: 0.5vw;
-  grid-row:6;
-  grid-column: 11;
-
-}
-.searchbox{
-  margin: 0.2vw;
+.homecomp{
   display: flex;
-  flex-direction: row;
- 
-  justify-content: space-around;
-  grid-row: 18/20;
+  grid-row: 6/16;
   grid-column: 3/20;
 }
-.location, .find{
-       color: black;
-       border-radius: 1.5vw;
-       font-size: 1.2vw;
-       text-align: center;
-       border:solid 0.2vw rgb(141, 136, 136);
+
+.homeimage{
+ font-size: 17vw;
+ font-weight: bolder;
+ background-size:45vw; 
+ grid-row: 4/18;
+ grid-column: 2/20;
+
+
 }
-.location{
-  width: 40vw;
+.line1,.line2{
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  margin:1vw;
+  font-weight: bolder;
+  font-size: 25vw;
+  grid-row:  3/ 12 ;
+  grid-column: 3/8;
+
+    
 }
-.find{
-  width: 10vw;
- 
+.line1:hover{
+  color:white;
 }
+.line2:hover{
+
+ color: rgba(0, 0, 0, 0.088);
+
+}
+
 
 body {
   margin: 0;
   padding: 0;
 }
-.box-container{
 
-  background-color: #5CDB95;
+.mainbox{
+  background-color: rgba(0, 0, 0, 0.088);
   display: grid;
   height: 100vh;
   width: 100%;
@@ -84,124 +53,89 @@ body {
   grid-template-rows: repeat(21,1fr);
   grid-template-columns: repeat(21,1fr);
 }
-/* .findbox{
-  border: solid 1 black;
-} */
-.pages{
-  color:#05386B;
-  padding: 1vw;
-  text-decoration: none;
-  margin: 0.5vw;
-  font-size: 1.55vw;
-  
+.routes{
+  font-weight: bolder;
 }
-.style{ 
+.navbox{
 
- background-color: rgb(226, 226, 226);
- box-shadow:  30px 30px 20px rgb(82, 79, 79);
- grid-row: 2/12;
- grid-column: 2/12;
- border-radius: 3vw;
-}
-.logo{
-  margin-left: 30px;
-  height: 6.2vh;
-  width: 3.2vw;
-  border-radius: 25px;
-}
-.box ,.navcontainer{
-  font-size: 1em;
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-}
-.navcontainer{
-  color:black;
-  background-color: aquamarine;
-  border: solid ;
-  border-radius: 1vw;
-  padding: 1vw;
+  padding: 2vw;
   grid-row: 2;
-  grid-column: 2/21;
+  grid-column: 1/22;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.item{
-  /* border:solid 1px black; */
+.nav_box,.logo{
+  color:black;
+
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+   width: 40vw;
+   font-weight: bolder;
+   font-size: 1.5vw;
+   display:flex;
+   align-items: center;
+   flex-direction: row;
+   justify-content: space-between;
 }
-.loginbox,.signupbox{
-  grid-row: 6/18;
-  background-color: rgba(33, 29, 29, 0.9);
-  grid-column: 5/16;
-  border:solid 0.2vw rgb(133, 129, 129);
-  border-radius: 1.5vw;
+.logo{
   display: flex;
   align-items: center;
-  flex-direction: column;
-  justify-content: space-around;
+  font-size: 2vw;
+  font-weight: bolder;
 }
-.login_box{
-  color: black;
-}
-.login_box,.titleforloginandsignup{
-  margin: 0.2vh;
-  text-align: center;
-  border-radius: 1.5vw;
-  font-size: 1.2vw;
-  width: 25vw;
-  height: 8vh;
-}
-.titleforsearch{
-  text-align: center;
-  border-radius: 1.5vw;
-  font-size: 3.2vw;
-  grid-row: 2;
-  grid-column: 6/9;
-  margin: 2vh;
-}
-.titleforloginandsignup{
-  font-size: 2.5vw;
-}
-.submit{
-  font-size: 1vw;
-  text-align: center;
-  border-radius: 1.5vw;
- width: 7vw;
- height: 6vh;
-}
-.leaflet-marker-icon, .leaflet-routing-alt{
-  font-size: 0px;
-  display: none;
-  alt: none;
-}
-.aboutbox{
-  border: solid gray ;
-  background-color: rgba(33, 29, 29, 0.9);
-  border-radius:2vw;
-  display: flex;
-  flex-direction: column;
-  grid-row: 5/20;
-  grid-column: 3/20;
-  font-size: 1.1em;
-  padding: 2vw;
-}
-.heading{
- font-size:2.2em; 
- text-align: center;
-}
-
-.infobox{
-  padding: 1vw;
-  font-size: 1vw;
-  border-radius: 1vw;
+.loginbox{
+  height: 50vh;
+  width: 30vw;
   display: flex;
   justify-content: space-evenly;
   flex-direction: column;
-  grid-row: 4/9;
-  grid-column: 1/3;
-  background-color: rgba(33, 29, 29, 0.7);
+  grid-column: 9/13;
+  grid-row: 7/15;
+  border: solid black;
+  align-items: center;
+  font-size:2.5vw;
+}
+.input,.button{
+  width: 15vw;
+}
+
+.aboutbox{
+  color: black;
+  height: fit-content;
+  border:solid black;
+  padding: 2vw;
+  grid-row: 10;
+  grid-column: 2/21;
+  font-size:1.5vw;
+}
+.desc{
+  grid-row: 17;
+  grid-column: 5/19;
+  font-size: 1.5vw;
+}
+.user_location,input,button{
+  height: 8vh;
   margin: 0.5vw;
-  border: solid gray;
+  width: 5vw;
+  color: black;
+  font-size: 1.5vw;
+  border-radius: 1vw;
+  text-align: center;
+}
+.user_location,input{
+  display: flex;
+  align-items: center;
+  color: black;
+  grid-row: 19;
+  grid-column: 2/20;
+  width: 100%;
+}
+.routes:hover{
+  font-size: 2vw;
+}
+
+
+@media (orientation: portrait) {
+
 }
