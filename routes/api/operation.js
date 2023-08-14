@@ -1,6 +1,14 @@
 let express=require('express')
 let route=express.Router();
 let user_auth=require('../../middleware/userauth')
+let Parkspots=require('../../data/parkspots/Parkspots')
+let history=require('../../data/log/history')
+
+function costofpark(date1, date2) {
+  const diffInMilliseconds = Math.abs(date2 - date1);
+  const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
+  return diffInMinutes;
+}
 
 
 
@@ -24,7 +32,8 @@ route.post('/sell', user_auth, async (req, res) => {
       await newSpot.save();
       res.send({ msg: 'Saved parking spot' });
     } catch (error) {
-      res.status(500).send({ error: "Server error" });
+      console.log(error);
+      res.status(500).send({ err: "Server error" });
     }
   });
   
@@ -33,12 +42,12 @@ route.post('/sell', user_auth, async (req, res) => {
       try {
         const existingBooking = await Parkspots.findOne({ bookedby: req.body.user_id });
         if (existingBooking) {
-          return res.send({ message: "You already have a booking" });
+          return res.send({ msg: "You already have a booking" });
         }
     
         const ownedSpot = await Parkspots.findOne({ owned_id: req.body.owned_id });
         if (!ownedSpot) {
-          return res.status(400).send({ message: "Invalid owner_id" });
+          return res.status(400).send({ msg: "Invalid owner_id" });
         }
     
         if (ownedSpot.status === false) {
@@ -55,11 +64,11 @@ route.post('/sell', user_auth, async (req, res) => {
     
           res.send({ msg: "Parking spot booked" });
         } else {
-          res.status(400).send({ message: "This spot is already booked by someone" });
+          res.status(400).send({ msg: "This spot is already booked by someone" });
         }
       } catch (error) {
         console.error(error);
-        res.status(500).send({ error: "Server error" });
+        res.status(500).send({ err: "Server error" });
       }
     });
     
@@ -67,7 +76,7 @@ route.post('/sell', user_auth, async (req, res) => {
       try {
         const data = await Parkspots.findOne({ bookedby: req.body.user_id });
         if (!data) {
-          return res.status(400).send({ message: "You haven't booked any parking space" });
+          return res.status(400).send({ msg: "You haven't booked any parking space" });
         }
     
         const timeofbooking = data.bookedtime;
@@ -76,7 +85,7 @@ route.post('/sell', user_auth, async (req, res) => {
           { $set: { status: 0, bookedby: "", bookedtime: Date.now() } }
         );
     
-        const cost = process.env.cost * costofpark(Date.now(), timeofbooking);
+        const cost = process.env.COST * costofpark(Date.now(), timeofbooking);
         const log = new history({
           booked_by: req.body.user_id,
           owner_id: data.owned_id,
@@ -84,10 +93,10 @@ route.post('/sell', user_auth, async (req, res) => {
         });
     
         await log.save();
-        res.send({ message: "Cancelled the parking spot" });
+        res.send({ msg: "Cancelled the parking spot" });
       } catch (error) {
         console.error(error);
-        res.status(500).send({ error: "Server error" });
+        res.status(500).send({ err: "Server error" });
       }
     });
     
