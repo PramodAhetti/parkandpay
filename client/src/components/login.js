@@ -22,9 +22,9 @@ export default function Login() {
         data.name=res.data.name;
         data.token=res.data.token;
         data.id=res.data.id;
-        localStorage.setItem('auth_token',data.token)
-      
         dispatch({type:'LOGIN',payload:data});
+        localStorage.setItem('user',JSON.stringify(data))
+    
         console.log(data); 
         navigate('/chat');
       }catch(error){

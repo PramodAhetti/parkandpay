@@ -6,7 +6,7 @@ import Login from './components/login'
 import Signup from './components/signup'
 import About from "./components/about";
 
-
+ 
 function App() {
   return (
        <div className="mainbox">
@@ -17,7 +17,7 @@ function App() {
               <Route path='/login' element={<Login/>} />
               <Route path='/signup' element={<Signup/>} />
               <Route path='/about' element={<About/>} />
-            </Routes>
+            </Routes> 
         </BrowserRouter>
         </div>
   );
