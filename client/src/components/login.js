@@ -16,14 +16,16 @@ export default function Login() {
      let data={email:email.current.value,
                password:password.current.value}
       try{
-        let res=await axios.post('https://dev-book.onrender.com/user/login',data);
+        let res=await axios.post('https://parknpay.onrender.com/user/login',data);
         res=res.data;
         delete data.password;
         data.name=res.data.name;
         data.token=res.data.token;
         data.id=res.data.id;
-        localStorage.setItem('user',data)
+        localStorage.setItem('auth_token',data.token)
+      
         dispatch({type:'LOGIN',payload:data});
+        console.log(data); 
         navigate('/chat');
       }catch(error){
         alert("wrong password or email");
