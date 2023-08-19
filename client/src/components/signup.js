@@ -14,11 +14,13 @@ export default function Signup() {
                         email:document.getElementById('email').value,
                         password:document.getElementById('password').value}
           try{
-            let res=await axios.post('https://parknpay.onrender.com/user/new',userdata);
+            let res=await axios.post('https://dev-book.onrender.com/user/new',userdata);
             res=res.data;
             console.log(res);
-            dispatch({type:'NEW',payload:res});
-            localStorage.setItem('user',JSON.stringify(res));
+            delete userdata.password;
+            userdata.token=res.data.token;
+            console.log(userdata);
+            dispatch({type:'NEW',payload:userdata});
             navigate('/chat')
           }catch(error){
             alert(error.response.data.err);

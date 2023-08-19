@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import {  Outlet } from "react-router-dom";
 import { useSelector } from 'react-redux';
 export default function Nav() {
-  let user=localStorage.getItem('user');
-  user=JSON.parse(user);
+  let user=useSelector(state=>state.user);
   console.log(user)
   return (
     <div className='navbox'>
@@ -13,7 +12,7 @@ export default function Nav() {
         <Link className='routes' to='/'>HOME</Link>
         <Link className='routes'  to='/about'>ABOUT</Link>
         <Link className='routes'  to='/about'>FEATURES</Link>
-        {(user==undefined)?(   <>     <Link className='routes'  to='/login'>LOGIN</Link>
+        {(user.name==undefined)?(   <>     <Link className='routes'  to='/login'>LOGIN</Link>
         <Link className='routes'  to='/signup'>SIGNUP</Link></>):( <Link className='routes'  to='/login'>{user.name}</Link>)}
       </nav>
       <Outlet />
